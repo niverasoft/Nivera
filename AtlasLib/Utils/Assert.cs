@@ -18,6 +18,7 @@ namespace AtlasLib.Utils
         private const string ListNotNullMessage = "Assertion failed: Some object in the list was null.";
         private const string EitherNullMessage = "Assertion failed: Both provided objects were null.";
         private const string FileExistsMessage = "Assertion failed: Specified file does not exist.";
+        private const string DirectoryExistsMessage = "Assertion failed: Specified directory does not exist.";
 
         public static void EitherNull(object obj1, object obj2, object message = null)
         {
@@ -34,6 +35,12 @@ namespace AtlasLib.Utils
         {
             if (!File.Exists(path))
                 ThrowHelper.LogAndThrow(message != null ? message.ToString() : FileExistsMessage);
+        }
+
+        public static void DirectoryExists(string path, object message = null)
+        {
+            if (!Directory.Exists(path))
+                ThrowHelper.LogAndThrow(message != null ? message.ToString() : DirectoryExistsMessage);
         }
 
         public static void NotNull(object obj, object message = null)

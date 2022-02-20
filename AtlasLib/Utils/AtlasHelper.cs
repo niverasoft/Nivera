@@ -1,37 +1,41 @@
-﻿using AtlasLib.Logging;
-
-namespace AtlasLib.Utils
+﻿namespace AtlasLib.Utils
 {
     internal static class AtlasHelper
     {
         internal static void Info(object message)
         {
-            LibProperties.Logger?.Write(message.ToString().WithTag(BasicLogTag.Information));
+            LibProperties.Logger?.Info(message.ToString());
         }
 
         internal static void Debug(object message)
         {
-            LibProperties.Logger?.Write(message.ToString().WithTag(BasicLogTag.Debug));
+            if (!LibProperties.EnableDebugLog)
+                return;
+
+            LibProperties.Logger?.Debug(message.ToString());
         }
 
         internal static void Error(object message)
         {
-            LibProperties.Logger?.Write(message.ToString().WithTag(BasicLogTag.Error));
+            LibProperties.Logger?.Error(message.ToString());
         }
 
         internal static void Fatal(object message)
         {
-            LibProperties.Logger?.Write(message.ToString().WithTag(BasicLogTag.Fatal));
+            LibProperties.Logger?.Fatal(message.ToString());
         }
 
         internal static void Verbose(object message)
         {
-            LibProperties.Logger?.Write(message.ToString().WithTag(BasicLogTag.Verbose));
+            if (!LibProperties.EnableVerboseLog)
+                return;
+
+            LibProperties.Logger?.Trace(message.ToString());
         }
 
         internal static void Warn(object message)
         {
-            LibProperties.Logger?.Write(message.ToString().WithTag(BasicLogTag.Warning));
+            LibProperties.Logger?.Warn(message.ToString());
         }
     }
 }

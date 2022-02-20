@@ -1,8 +1,9 @@
-﻿using AtlasLib.Logging;
-using AtlasLib.Utils;
+﻿using AtlasLib.Utils;
 using AtlasLib.Reflection;
 
 using System;
+
+using NLog;
 
 namespace AtlasLib
 {
@@ -12,6 +13,8 @@ namespace AtlasLib
 
         public static bool AddStackTraceToThrowHelper;
         public static bool HandleUnhandledExceptions;
+        public static bool EnableDebugLog;
+        public static bool EnableVerboseLog;
 
         public static void Load()
         {

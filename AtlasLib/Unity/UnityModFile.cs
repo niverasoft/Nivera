@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 
-using AssetsTools.Dynamic;
+using UnityEngine;
 
 namespace AtlasLib.Unity
 {
@@ -12,9 +12,7 @@ namespace AtlasLib.Unity
         public string Name;
         public string Version;
 
-        public List<string> AssetFiles;
-
-        public List<DynamicAsset> LoadedAssets;
+        public List<Object> LoadedAssets;
         public Assembly LoadedScripts;
     }
 }

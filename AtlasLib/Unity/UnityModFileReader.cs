@@ -5,10 +5,12 @@ using System.Reflection;
 using System.Collections.Generic;
 
 using AtlasLib.Utils;
-using AtlasLib.CodeGen;
+using AtlasLib.Properties;
+using AtlasLib.Reflection.Compiler;
 
 using AssetsTools;
-using AssetsTools.Dynamic;
+using AssetsTools.NET;
+using AssetsTools.NET.Extra;
 
 using HarmonyLib;
 
@@ -23,7 +25,7 @@ namespace AtlasLib.Unity
         // VERSION
         // ASSET FILES
 
-        public const int MinimalFileLines = 5;
+        public const int MinimalFileLines = 3;
 
         public UnityModFile ReadFile(string directory)
         {
@@ -38,10 +40,6 @@ namespace AtlasLib.Unity
             string author = lines[0].Replace("AUTHOR = ", "");
             string name = lines[1].Replace("NAME = ", "");
             string version = lines[2].Replace("VERSION = ", "");
-            string[] files = lines[3].Replace("ASSET FILES = ", "").Split(',');
-
-            foreach (string file in files)
-                Assert.FileExists($"{directory}/{file}");
 
             return new UnityModFile
             {
@@ -49,7 +47,6 @@ namespace AtlasLib.Unity
                 Name = name,
                 Version = version,
                 Directory = directory,
-                AssetFiles = files.ToList(),
             };
         }
 
@@ -57,39 +54,84 @@ namespace AtlasLib.Unity
         {
             Assert.NotNull(unityModFile);
 
-            unityModFile.LoadedAssets = new List<DynamicAsset>();
+            AssetsManager assetsManager = new AssetsManager();
 
-            foreach (string file in unityModFile.AssetFiles)
-            {
-                Assert.FileExists(file);
+            MemoryStream memoryStream = new MemoryStream(Resources.classdata);
 
-                AssetBundleFile assetBundleFile = AssetBundleFile.LoadFromFile($"{unityModFile.Directory}/{file}");
-
-                Assert.NotNull(assetBundleFile);
-
-                foreach (AssetBundleFile.FileType fileType in assetBundleFile.Files)
-                {
-                    AssetsFile assetsFile = fileType.ToAssetsFile();
-
-                    Assert.NotNull(assetsFile);
-
-                    foreach (AssetsFile.ObjectType objectType in assetsFile.Objects)
-                    {
-                        DynamicAsset dynamicAsset = objectType.ToDynamicAsset();
-
-                        Assert.NotNull(dynamicAsset);
-
-                        unityModFile.LoadedAssets.Add(dynamicAsset);
-                    }
-                }
-            }
-
-            if (Directory.Exists($"{unityModFile.Directory}/AssemblySource"))
-            {
-                LoadScripts(unityModFile);
-            }
+            ClassDatabaseFile classDatabase = assetsManager.LoadClassDatabase(memoryStream);
             
+            if (Directory.Exists($"{unityModFile.Directory}/AssemblySource"))
+                LoadScripts(unityModFile);
+
+            AssetsFileInstance assetsFile = null;
+
+            if (Directory.Exists($"{unityModFile.Directory}/Assets"))
+                assetsFile = LoadAssetBundle(unityModFile, assetsManager);
+            else
+            {
+                BundleFileInstance bundleFileInstance = new BundleFileInstance(File.OpenRead($"{unityModFile.Directory}/assetBundle.unity3d"), null, true);
+                assetsFile = assetsManager.LoadAssetsFileFromBundle(bundleFileInstance, 0, true);
+            }
+
             return unityModFile;
+        }
+
+        public AssetsFileInstance LoadAssetBundle(UnityModFile unityModFile, AssetsManager assetsManager)
+        {
+            Assert.NotNull(unityModFile);
+            Assert.DirectoryExists($"{unityModFile.Directory}/Assets");
+
+            string tempPath = $"{Path.GetTempPath()}/AtlasLib/Mods/LoadedAssets/{unityModFile.Name}/assetBundle.unity3d";
+
+            Dictionary<string, string> bundles = new Dictionary<string, string>();
+
+            string[] files = Directory.GetFiles($"{unityModFile.Directory}/Assets");
+
+            foreach (string file in files)
+            {
+                string fileName = Path.GetFileName(file);
+                string pureFileName = Path.GetFileNameWithoutExtension(file);
+
+                bundles.Add(pureFileName, null);
+            }
+
+            foreach (KeyValuePair<string, string> pair in bundles)
+            {
+                string pairFile = files.FirstOrDefault(x => !x.EndsWith(".cfg") && Path.GetFileName(x) == pair.Key);
+
+                if (!string.IsNullOrEmpty(pairFile))
+                    bundles[pair.Key] = pairFile;
+                else
+                    bundles.Remove(pair.Key);
+            }
+
+            foreach (KeyValuePair<string, string> pair in bundles)
+            {
+                UnityAssetConfig unityAssetConfig = ReadConfig(pair.Key);
+
+                AssetTypeTemplateField assetTypeTemplateField = new AssetTypeTemplateField();
+
+                ClassDatabaseType classDatabaseType = AssetHelper.FindAssetClassByName(assetsManager.classFile, unityAssetConfig.AssetType);
+
+                assetTypeTemplateField.FromClassDatabase(assetsManager.classFile, classDatabaseType, 0);
+
+                AssetTypeValueField valueBuilder = ValueBuilder.DefaultValueFieldFromTemplate(assetTypeTemplateField);
+
+                valueBuilder.Get("m_Name").GetValue().Set(unityAssetConfig.AssetName);
+            }
+
+            return null;
+        }
+
+        public UnityAssetConfig ReadConfig(string configPath)
+        {
+            string[] lines = File.ReadAllLines(configPath);
+
+            return new UnityAssetConfig
+            {
+                AssetType = lines[0].Replace("ASSET TYPE NAME = ", ""),
+                AssetName = lines[1].Replace("ASSET NAME = ", "")
+            };
         }
 
         public UnityModFile LoadScripts(UnityModFile unityModFile)
@@ -97,9 +139,14 @@ namespace AtlasLib.Unity
             Assert.NotNull(unityModFile);
             Assert.DirectoryExists($"{unityModFile.Directory}/AssemblySource");
 
-            unityModFile.LoadedScripts = CodeCompiler.Compile($"{unityModFile.Directory}/AssemblySource");
+            CodeCompiler codeCompiler = new CodeCompiler(CodeLanguageType.CSharp, CodeSourceType.Folder, $"{unityModFile.Directory}/AssemblySource");
+
+            unityModFile.LoadedScripts = codeCompiler.Compile();
 
             Assert.NotNull(unityModFile.LoadedScripts);
+
+            if (LibProperties.UseUnityCompatModule)
+                PatchInAssembly(unityModFile, LibUnityCompatModule.AssemblyCSharpAssembly);
 
             return unityModFile;
         }
@@ -121,17 +168,26 @@ namespace AtlasLib.Unity
                         if (method.ReturnType != Constants.BoolType)
                             continue;
 
-                        MethodInfo targetMethod = targetType.GetMethod(method.Name, method.GetParameters().Select(x => x.ParameterType).ToArray());
+                        MethodInfo targetMethod = FindTargetMethodInternal(targetType, method);
 
                         if (targetMethod != null)
                         {
                             harmony.Patch(targetMethod, new HarmonyMethod(method));
 
-                            AtlasHelper.Verbose($"UnityModFileReader >> Patched method {targetType.FullName}::{targetMethod.Name}({string.Join(",", method.GetParameters().Select(x => x.ParameterType.FullName))})");
+                            AtlasHelper.Verbose($"Patched method {targetType.FullName}::{targetMethod.Name}({string.Join(",", method.GetParameters().Select(x => x.ParameterType.FullName))})");
                         }
                     }
                 }
             }
+        }
+
+        internal MethodInfo FindTargetMethodInternal(Type targetType, MethodInfo method)
+        {
+            ParameterInfo[] parameters = method.GetParameters();
+
+            parameters = parameters.Where(x => x.Name != "__instance" && x.Name != "__result" && x.Name != "__state" && x.Name != "__exception").ToArray();
+
+            return targetType.GetMethod(method.Name, parameters.Select(x => x.ParameterType).ToArray());
         }
     }
 }

@@ -38,8 +38,8 @@
     <Reference Include="0Harmony, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Lib.Harmony.2.2.0\lib\net472\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="AssetsTools, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AssetsTools.0.1.2\lib\net461\AssetsTools.dll</HintPath>
+    <Reference Include="AssetsTools.NET, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AssetsTools.NET.2.0.11\lib\net40\AssetsTools.NET.dll</HintPath>
     </Reference>
     <Reference Include="Costura, Version=5.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Costura.Fody.5.7.0\lib\netstandard1.0\Costura.dll</HintPath>
@@ -297,7 +297,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeGen\CodeCompiler.cs" />
     <Compile Include="ConfigLib\Json\JsonConfigEngine.cs" />
     <Compile Include="ConfigLib\Json\JsonConfigReader.cs" />
     <Compile Include="ConfigLib\Json\JsonConfigWriter.cs" />
@@ -323,7 +322,21 @@
     <Compile Include="Networking\NetworkConnectionInfo.cs" />
     <Compile Include="Networking\NetworkServer.cs" />
     <Compile Include="Networking\NetworkTransport.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Reflection\Compiler\CodeCompiler.cs" />
+    <Compile Include="Reflection\Compiler\CodeLanguageType.cs" />
+    <Compile Include="Reflection\Compiler\CodeSourceType.cs" />
+    <Compile Include="Reflection\Compiler\CompilerLogType.cs" />
+    <Compile Include="Reflection\Compiler\DefaultRerouteCompilerLogger.cs" />
+    <Compile Include="Reflection\Compiler\ICompilerLogger.cs" />
     <Compile Include="Reflection\ReflectMethodHelper.cs" />
+    <Compile Include="Unity\LibUnityCompatModule.cs" />
+    <Compile Include="Unity\LibUnityCompatModuleComponent.cs" />
+    <Compile Include="Unity\UnityAssetConfig.cs" />
     <Compile Include="Unity\UnityAssetReplacer.cs" />
     <Compile Include="Unity\UnityModFile.cs" />
     <Compile Include="Unity\UnityModFileReader.cs" />
@@ -351,10 +364,18 @@
     <Compile Include="Utils\RandomGen.cs" />
     <Compile Include="Utils\ThrowHelper.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Resources\classdata.tpk" />
+    <None Include="Resources\classdata_editor.tpk" />
+    <None Include="Resources\classdata_large.tpk" />
     <None Include="Scripts\jquery-2.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>

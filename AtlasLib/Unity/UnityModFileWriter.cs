@@ -25,7 +25,6 @@ namespace AtlasLib.Unity
                 unityModFile.Author,
                 unityModFile.Name,
                 unityModFile.Version,
-                string.Join(",", unityModFile.AssetFiles)
             };
 
             File.WriteAllLines($"{directory}/modInfo.cfg", lines);

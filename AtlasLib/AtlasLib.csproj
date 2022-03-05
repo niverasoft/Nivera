@@ -35,17 +35,41 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lib.Harmony.2.2.0\lib\net472\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="AssetsTools.NET, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AssetsTools.NET.2.0.11\lib\net40\AssetsTools.NET.dll</HintPath>
     </Reference>
     <Reference Include="Costura, Version=5.8.0.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
       <HintPath>..\packages\Costura.Fody.5.8.0-alpha0098\lib\netstandard1.0\Costura.dll</HintPath>
     </Reference>
+    <Reference Include="dnlib, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\dnSpyLibs.0.0.1\lib\net45\dnlib.dll</HintPath>
+    </Reference>
+    <Reference Include="dnSpy.Contracts.Logic, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\dnSpyLibs.0.0.1\lib\net45\dnSpy.Contracts.Logic.dll</HintPath>
+    </Reference>
+    <Reference Include="dnSpy.Decompiler, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\dnSpyLibs.0.0.1\lib\net45\dnSpy.Decompiler.dll</HintPath>
+    </Reference>
+    <Reference Include="dnSpy.Decompiler.ILSpy.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\dnSpyLibs.0.0.1\lib\net45\dnSpy.Decompiler.ILSpy.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Fare, Version=2.1.0.0, Culture=neutral, PublicKeyToken=ea68d375bf33a7c8, processorArchitecture=MSIL">
       <HintPath>..\packages\Fare.2.1.2\lib\net35\Fare.dll</HintPath>
     </Reference>
     <Reference Include="Fasterflect, Version=3.0.0.0, Culture=neutral, PublicKeyToken=38d18473284c1ca7, processorArchitecture=MSIL">
       <HintPath>..\packages\fasterflect.3.0.0\lib\netstandard20\netstandard20\Fasterflect.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.Decompiler, Version=2.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\dnSpyLibs.0.0.1\lib\net45\ICSharpCode.Decompiler.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.NRefactory, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\dnSpyLibs.0.0.1\lib\net45\ICSharpCode.NRefactory.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.NRefactory.CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\dnSpyLibs.0.0.1\lib\net45\ICSharpCode.NRefactory.CSharp.dll</HintPath>
     </Reference>
     <Reference Include="LiteNetLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LiteNetLib.0.9.5.2\lib\net35\LiteNetLib.dll</HintPath>
@@ -264,8 +288,8 @@
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\dnSpyLibs.0.0.1\lib\net45\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -340,7 +364,8 @@
     <Compile Include="Reflection\Patching\PropertyPatchers\Instance\InstancePropertyPatcher.cs" />
     <Compile Include="Reflection\Patching\PropertyPatchers\Static\StaticPropertyCallback.cs" />
     <Compile Include="Reflection\Patching\PropertyPatchers\Static\StaticPropertyPatcher.cs" />
-    <Compile Include="Reflection\ReflectMethodHelper.cs" />
+    <Compile Include="Unity\Assets\AssetMod.cs" />
+    <Compile Include="Unity\Assets\AssetReplacer.cs" />
     <Compile Include="Unity\CompatLayer\LibUnityCompatModule.cs" />
     <Compile Include="Unity\CompatLayer\LibUnityCompatModuleComponent.cs" />
     <Compile Include="Utils\Assert.cs" />

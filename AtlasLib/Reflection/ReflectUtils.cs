@@ -11,7 +11,7 @@ namespace AtlasLib.Reflection
 {
     public static class ReflectUtils
     {
-        private static readonly TypeCode[] SimpleTypes = new TypeCode[] { TypeCode.Boolean, TypeCode.Byte, TypeCode.SByte, TypeCode.Int16,
+        public static readonly TypeCode[] SimpleTypes = new TypeCode[] { TypeCode.Boolean, TypeCode.Byte, TypeCode.SByte, TypeCode.Int16,
                                                                           TypeCode.UInt16, TypeCode.Int32, TypeCode.UInt32, TypeCode.Int64,
                                                                           TypeCode.UInt64, TypeCode.Single, TypeCode.Double, TypeCode.Decimal,
                                                                           TypeCode.DateTime, TypeCode.Char, TypeCode.String };
@@ -25,9 +25,9 @@ namespace AtlasLib.Reflection
             return type.CreateInstance(parameters);
         }
 
-        public static ReflectMethodHelper CreateInvoker(MethodInfo methodInfo) 
+        public static MethodInvoker GetDelegate(MethodInfo methodInfo) 
         {
-            return ReflectMethodHelper.Create(methodInfo);
+            return methodInfo.DelegateForCallMethod();
         }
 
         public static T ConvertTo<T>(this object obj)

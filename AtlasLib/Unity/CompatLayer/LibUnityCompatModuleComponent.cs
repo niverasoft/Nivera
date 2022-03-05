@@ -1,14 +1,12 @@
 ﻿using UnityEngine;
 
-using AtlasLib.Utils;
-
-namespace AtlasLib.Unity
+namespace AtlasLib.Unity.CompatLayer
 {
     internal class LibUnityCompatModuleComponent : MonoBehaviour
     {
         void Start()
         {
-            AtlasHelper.Verbose($"UnityCompatModuleComponent started.");
+            AtlasLogger.Verbose($"UnityCompatModuleComponent started.");
 
             LibUnityCompatModule.OnStart();
         }

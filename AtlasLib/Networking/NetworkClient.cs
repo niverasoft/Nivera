@@ -70,7 +70,7 @@ namespace AtlasLib.Networking
         public void Start(string address, int port)
         {
             netManager.Start();
-            netManager.Connect(address, port, RandomGen.NextString());
+            netManager.Connect(address, port, RandomGen.RandomString());
         }
 
         public void Stop()

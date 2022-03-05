@@ -19,7 +19,7 @@ namespace AtlasLib.ConfigLib.Atlas.Internals
             _dict = dict;
             _key = key;
 
-            AtlasHelper.Verbose($"DictionarySerializer >> Entering: {key}");
+            AtlasLogger.Verbose($"DictionarySerializer >> Entering: {key}");
         }
 
         public void Serialize(ConfigWriter writer)
@@ -27,7 +27,7 @@ namespace AtlasLib.ConfigLib.Atlas.Internals
             int offset = _key.Length + MinOffset;
             int index = 0;
 
-            AtlasHelper.Verbose($"DictionarySerializer >> Offset: {offset}");
+            AtlasLogger.Verbose($"DictionarySerializer >> Offset: {offset}");
 
             IDictionaryEnumerator enumerator = _dict.GetEnumerator();
 
@@ -50,8 +50,8 @@ namespace AtlasLib.ConfigLib.Atlas.Internals
                     if (value != null && value is DateTime time)
                         valueStr = time.ToString("G");
 
-                    AtlasHelper.Verbose($"DictionarySerializer >> Current Key: {keyStr}");
-                    AtlasHelper.Verbose($"DictionarySerializer >> Current Value: {valueStr}");
+                    AtlasLogger.Verbose($"DictionarySerializer >> Current Key: {keyStr}");
+                    AtlasLogger.Verbose($"DictionarySerializer >> Current Value: {valueStr}");
 
                     if (index == 0)
                         writer.WriteToFirst($"{keyStr} > {valueStr}");

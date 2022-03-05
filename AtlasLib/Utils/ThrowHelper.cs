@@ -15,13 +15,13 @@ namespace AtlasLib.Utils
         {
             Exception ex = new T();
 
-            AtlasHelper.Fatal(ex);
+            AtlasLogger.Fatal(ex);
 
-            if (LibProperties.AddStackTraceToThrowHelper)
+            if (LibProperties.Log_AddStackTraceToThrowHelper)
             {
                 MethodBase method = new StackTrace().GetFrame(1).GetMethod();
 
-                AtlasHelper.Fatal($"Exception thrown by {method.DeclaringType.FullName}.{method.Name}");
+                AtlasLogger.Fatal($"Exception thrown by {method.DeclaringType.FullName}.{method.Name}");
             }
 
             throw ex;
@@ -36,13 +36,13 @@ namespace AtlasLib.Utils
         {
             Exception ex = new Exception(message.ToString());
 
-            AtlasHelper.Fatal(ex);
+            AtlasLogger.Fatal(ex);
 
-            if (LibProperties.AddStackTraceToThrowHelper)
+            if (LibProperties.Log_AddStackTraceToThrowHelper)
             {
                 MethodBase method = new StackTrace().GetFrame(1).GetMethod();
 
-                AtlasHelper.Fatal($"Exception thrown by {method.DeclaringType.FullName}.{method.Name}");
+                AtlasLogger.Fatal($"Exception thrown by {method.DeclaringType.FullName}.{method.Name}");
             }
 
             throw ex;

@@ -1,33 +1,27 @@
-﻿using AtlasLib.Utils;
-using AtlasLib.Unity;
+﻿using AtlasLib.Unity.CompatLayer;
 using AtlasLib.Reflection;
+using AtlasLib.Logging;
 
 using System;
-
-using UnityEngine;
 
 namespace AtlasLib
 {
     public static class LibProperties
     {
-        internal static LibUnityCompatModuleComponent libUnityCompatModuleComponent;
-        internal static GameObject gameObject;
+        public static ILogger Logger;
 
-        internal const string AtlasGameObjectName = "Atlas_AtlasLib_UnityCompatModuleGameObject";
-        internal const string AtlasGameObjectTag = "Atlas_AtlasLib_ControlObject";
+        public static bool System_HandleUnhandledExceptions;
+        public static bool System_UseUnityCompatModule;
 
-        public static NLog.ILogger Logger;
-
-        public static bool AddStackTraceToThrowHelper;
-        public static bool HandleUnhandledExceptions;
-        public static bool EnableDebugLog;
-        public static bool EnableVerboseLog;
-
-        public static bool UseUnityCompatModule;
+        public static string Log_DateTimeFormat = "t";
+        public static bool Log_EnableDebugLog;
+        public static bool Log_EnableVerboseLog;
+        public static bool Log_ShowCurrentFunctionInLog;
+        public static bool Log_AddStackTraceToThrowHelper;
 
         public static void Load()
         {
-            if (HandleUnhandledExceptions)
+            if (System_HandleUnhandledExceptions)
             {
                 if (AppDomain.CurrentDomain != null)
                 {
@@ -35,25 +29,14 @@ namespace AtlasLib
                     {
                         if (y.ExceptionObject != null)
                         {
-                            AtlasHelper.Fatal(y.ExceptionObject.ConvertTo<Exception>());
+                            AtlasLogger.Fatal(y.ExceptionObject.ConvertTo<Exception>());
                         }
                     };
                 }
             }
-        }
 
-        public static void EnableUnityCompatibility(GameObject gameObject = null)
-        {
-            if (gameObject == null)
-                gameObject = UnityEngine.Object.FindObjectOfType<LibUnityCompatModuleComponent>()?.gameObject ?? new GameObject(AtlasGameObjectName);
-
-            LibProperties.gameObject = gameObject;
-            LibProperties.libUnityCompatModuleComponent = gameObject.GetComponent<LibUnityCompatModuleComponent>() ?? gameObject.AddComponent<LibUnityCompatModuleComponent>();
-
-            gameObject.tag = AtlasGameObjectTag;
-            gameObject.SetActive(true);
-
-            UnityEngine.Object.DontDestroyOnLoad(gameObject);
+            if (System_UseUnityCompatModule)
+                LibUnityCompatModule.EnableUnityCompatibility();
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace AtlasLib.Attributes
 {
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = true, Inherited = false)]
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = false)]
     public class DescriptionAttribute : Attribute
     {
         private string _description;

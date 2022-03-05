@@ -8,17 +8,17 @@ namespace AtlasLib.Reflection.Compiler
         {
             if (compilerLogType == CompilerLogType.CompilerError)
             {
-                AtlasHelper.Error($"[Error - {codeLanguageType} Compiler] >> {message}");
+                AtlasLogger.Error($"[Error - {codeLanguageType} Compiler] >> {message}");
             }
 
             if (compilerLogType == CompilerLogType.CompilerWarning)
             {
-                AtlasHelper.Warn($"[Warning - {codeLanguageType} Compiler] >> {message}");
+                AtlasLogger.Warn($"[Warning - {codeLanguageType} Compiler] >> {message}");
             }
 
             if (compilerLogType == CompilerLogType.CompilerMessage)
             {
-                AtlasHelper.Info($"[Message - {codeLanguageType} Compiler] >> {message}");
+                AtlasLogger.Info($"[Message - {codeLanguageType} Compiler] >> {message}");
             }
         }
     }

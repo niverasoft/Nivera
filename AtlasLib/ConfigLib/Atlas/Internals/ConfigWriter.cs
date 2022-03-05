@@ -15,7 +15,7 @@ namespace AtlasLib.ConfigLib.Atlas.Internals
             if (_curLines == null)
                 _curLines = new List<string>();
 
-            AtlasHelper.Verbose($"ConfigWriter >> Writing: {line} with {emptySpaces} empty space(s)");
+            AtlasLogger.Verbose($"ConfigWriter >> Writing: {line} with {emptySpaces} empty space(s)");
 
             if (emptySpaces > 0)
             {

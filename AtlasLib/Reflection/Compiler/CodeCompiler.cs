@@ -19,7 +19,7 @@ namespace AtlasLib.Reflection.Compiler
         private string path;
         private CompilerParameters compilerParameters;
 
-        public CodeCompiler(CodeLanguageType codeLanguageType, CodeSourceType codeSourceType, string path, bool logWarnings = true, ICompilerLogger compilerLogger = null)
+        public CodeCompiler(CodeLanguageType codeLanguageType, CodeSourceType codeSourceType, string path, bool logWarnings = true, ICompilerLogger compilerLogger = null, IEnumerable<string> dependencies = null)
         {
             this.codeLanguageType = codeLanguageType;
             this.codeSourceType = codeSourceType;
@@ -37,53 +37,54 @@ namespace AtlasLib.Reflection.Compiler
                 GenerateInMemory = true
             };
 
-            compilerParameters.ReferencedAssemblies?.AddRange(AppDomain.CurrentDomain?.GetAssemblies()?.Select(x => $"{x.GetName().Name}.dll").ToArray());
+            compilerParameters.ReferencedAssemblies?.AddRange(dependencies != null ? dependencies.ToArray() : AppDomain.CurrentDomain?.GetAssemblies()?.Select(x => $"{x.GetName().Name}.dll").ToArray());
 
             compilationLogger.LogCompiler(codeLanguageType, CompilerLogType.CompilerMessage, $"Initialized Compiler.");
         }
 
-        public Assembly Compile()
+        public Assembly Compile(IEnumerable<string> sourceCode = null)
         {
             VerifySourcePathInternal();
 
             List<string> files = new List<string>();
 
-            if (IsSourceAnArchiveInternal())
+            if (codeSourceType != CodeSourceType.SourceCode)
             {
-                IArchive archive = GetArchiveInternal();
-
-                string tempDirPath = $"{Path.GetTempPath()}/Decompiled_{DateTime.Now.Ticks}";
-
-                Directory.CreateDirectory(tempDirPath);
-
-                archive.WriteToDirectory(tempDirPath, new SharpCompress.Common.ExtractionOptions
+                if (IsSourceAnArchiveInternal())
                 {
-                    ExtractFullPath = true,
-                    Overwrite = true
-                });
+                    IArchive archive = GetArchiveInternal();
 
-                archive.Dispose();
+                    string tempDirPath = $"{Path.GetTempPath()}/Decompiled_{DateTime.Now.Ticks}";
 
-                foreach (string file in Directory.GetFiles(tempDirPath))
-                {
-                    if (IsValidFileInternal(file))
+                    Directory.CreateDirectory(tempDirPath);
+
+                    archive.WriteToDirectory(tempDirPath, new SharpCompress.Common.ExtractionOptions
                     {
-                        files.Add(file);
-                    }
-                }
+                        ExtractFullPath = true,
+                        Overwrite = true
+                    });
 
-                string[] directories = Directory.GetDirectories(tempDirPath);
+                    archive.Dispose();
 
-                foreach (string directory in directories)
-                {
-                    foreach (string file in Directory.GetFiles(directory))
+                    foreach (string file in Directory.GetFiles(tempDirPath, "*", SearchOption.AllDirectories))
                     {
-                        if (IsValidFileInternal(file) && !files.Contains(file))
+                        if (IsValidFileInternal(file))
                         {
                             files.Add(file);
                         }
                     }
                 }
+                else
+                {
+                    foreach (string file in Directory.GetFiles(path))
+                    {
+                        files.Add(file);
+                    }
+                }
+            }
+            else
+            {
+                files.AddRange(sourceCode);
             }
 
             Assembly assembly = null;
@@ -169,7 +170,7 @@ namespace AtlasLib.Reflection.Compiler
         {
             CodeDomProvider codeDomProvider = GetProviderInternal(CodeLanguageType.CSharp);
 
-            CompilerResults compilerResults = codeDomProvider.CompileAssemblyFromFile(compilerParameters, sourceFiles.ToArray());
+            CompilerResults compilerResults = codeSourceType != CodeSourceType.SourceCode ? codeDomProvider.CompileAssemblyFromFile(compilerParameters, sourceFiles.ToArray()) : codeDomProvider.CompileAssemblyFromSource(compilerParameters, sourceFiles.ToArray());
 
             if (compilerResults.Errors.HasWarnings)
                 LogWarningsInternal(compilerResults.Errors);
@@ -188,7 +189,7 @@ namespace AtlasLib.Reflection.Compiler
         {
             CodeDomProvider codeDomProvider = GetProviderInternal(CodeLanguageType.Cpp);
 
-            CompilerResults compilerResults = codeDomProvider.CompileAssemblyFromFile(compilerParameters, sourceFiles.ToArray());
+            CompilerResults compilerResults = codeSourceType != CodeSourceType.SourceCode ? codeDomProvider.CompileAssemblyFromFile(compilerParameters, sourceFiles.ToArray()) : codeDomProvider.CompileAssemblyFromSource(compilerParameters, sourceFiles.ToArray());
 
             if (compilerResults.Errors.HasWarnings)
                 LogWarningsInternal(compilerResults.Errors);
@@ -207,7 +208,7 @@ namespace AtlasLib.Reflection.Compiler
         {
             CodeDomProvider codeDomProvider = GetProviderInternal(CodeLanguageType.VisualBasic);
 
-            CompilerResults compilerResults = codeDomProvider.CompileAssemblyFromFile(compilerParameters, sourceFiles.ToArray());
+            CompilerResults compilerResults = codeSourceType != CodeSourceType.SourceCode ? codeDomProvider.CompileAssemblyFromFile(compilerParameters, sourceFiles.ToArray()) : codeDomProvider.CompileAssemblyFromSource(compilerParameters, sourceFiles.ToArray());
 
             if (compilerResults.Errors.HasWarnings)
                 LogWarningsInternal(compilerResults.Errors);
@@ -226,7 +227,7 @@ namespace AtlasLib.Reflection.Compiler
         {
             CodeDomProvider codeDomProvider = GetProviderInternal(CodeLanguageType.JavaScript);
 
-            CompilerResults compilerResults = codeDomProvider.CompileAssemblyFromFile(compilerParameters, sourceFiles.ToArray());
+            CompilerResults compilerResults = codeSourceType != CodeSourceType.SourceCode ? codeDomProvider.CompileAssemblyFromFile(compilerParameters, sourceFiles.ToArray()) : codeDomProvider.CompileAssemblyFromSource(compilerParameters, sourceFiles.ToArray());
 
             if (compilerResults.Errors.HasWarnings)
                 LogWarningsInternal(compilerResults.Errors);
@@ -302,8 +303,6 @@ namespace AtlasLib.Reflection.Compiler
 
             return false;
         }
-
-
 
         private string GetLanguageNameInternal(CodeLanguageType codeLanguageType)
         {

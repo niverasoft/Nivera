@@ -1,5 +1,7 @@
 ﻿using System;
 
+using AtlasLib.Encryption;
+
 namespace AtlasLib.Utils
 {
     public static class Constants
@@ -10,5 +12,7 @@ namespace AtlasLib.Utils
 
         public const string AtlasGameObjectName = "Atlas_AtlasLib_UnityCompatModuleGameObject";
         public const string AtlasGameObjectTag = "Atlas_AtlasLib_ControlObject";
+
+        public static readonly EncryptionBitmap LibraryBitmap = EncryptionBitmap.SizeOf(4096);
     }
 }

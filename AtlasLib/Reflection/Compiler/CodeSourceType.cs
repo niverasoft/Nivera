@@ -6,6 +6,7 @@
         ZipArchive,
         TarArchive,
         Folder,
-        SingleFile
+        SingleFile,
+        SourceCode
     }
 }

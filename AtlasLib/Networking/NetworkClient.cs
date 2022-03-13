@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Text;
 using System.Net.Sockets;
 
 using LiteNetLib;
+using LiteNetLib.Utils;
 
 using AtlasLib.Utils;
+using AtlasLib.Encryption;
+
+using Newtonsoft.Json;
 
 namespace AtlasLib.Networking
 {
@@ -11,10 +16,14 @@ namespace AtlasLib.Networking
     {
         public const int MilliTimeout = 10000;
 
-        public event Action<ConnectionRequest> OnConnectionRequest;
         public event Action<SocketError> OnConnectionError;
         public event Action<NetPeer> OnConnectionEstablished;
-        public event Action<NetPeer, DisconnectInfo> OnConnectionTerminated;
+        public event Action<DisconnectInfo> OnConnectionTerminated;
+        public event Action<NetworkTransport> OnDataReceived;
+        public event Action<NetworkTransport> OnDataSent;
+        public event Action<EncryptionBitmap> OnKeyReceived;
+
+        private EncryptionBitmap encryptionBitmap { get; set; }
 
         public NetworkConnection connection { get; private set; }
         public NetManager netManager { get; }
@@ -42,9 +51,33 @@ namespace AtlasLib.Networking
             netManager.IPv6Enabled = IPv6Mode.Disabled;
             netManager.MaxConnectAttempts = 5;
 
-            eventBasedNetListener.ConnectionRequestEvent += (x) =>
+            eventBasedNetListener.NetworkReceiveEvent += (x, e, z) =>
             {
-                OnConnectionRequest(x);
+                Assert.Equals(z, DeliveryMethod.ReliableOrdered, "Received an unreliable package.");
+
+                byte[] buffer = null;
+
+                if (e.GetInt() == 1)
+                {
+                    buffer = new byte[e.GetInt()];
+
+                    e.GetBytes(buffer, buffer.Length);
+
+                    encryptionBitmap = EncryptionBitmap.FromBytes(buffer);
+
+                    OnKeyReceived(encryptionBitmap);
+                }
+                else
+                {
+                    buffer = new byte[e.GetInt()];
+
+                    e.GetBytes(buffer, buffer.Length);
+
+                    EncryptedObject encryptedObject = JsonConvert.DeserializeObject<EncryptedObject>(Encoding.ASCII.GetString(buffer));
+                    NetworkTransport networkTransport = JsonConvert.DeserializeObject<NetworkTransport>(Encryptor.Decrypt(encryptionBitmap, encryptedObject));
+
+                    OnDataReceived(networkTransport);
+                }
             };
 
             eventBasedNetListener.NetworkErrorEvent += (x, e) =>
@@ -63,8 +96,22 @@ namespace AtlasLib.Networking
             {
                 netPeer = null;
                 connection = null;
-                OnConnectionTerminated(x, e);
+                OnConnectionTerminated(e);
             };
+        }
+
+        public void Send(NetworkTransport networkTransport)
+        {
+            byte[] data = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(Encryptor.Encrypt(encryptionBitmap, JsonConvert.SerializeObject(networkTransport))));
+
+            NetDataWriter netDataWriter = new NetDataWriter();
+
+            netDataWriter.Put(data.Length);
+            netDataWriter.Put(data);
+
+            netPeer.Send(netDataWriter.Data, DeliveryMethod.ReliableOrdered);
+
+            OnDataSent(networkTransport);
         }
 
         public void Start(string address, int port)

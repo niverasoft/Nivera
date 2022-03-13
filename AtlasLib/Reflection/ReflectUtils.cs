@@ -11,6 +11,9 @@ namespace AtlasLib.Reflection
 {
     public static class ReflectUtils
     {
+        private static readonly MethodInfo GET_RAW_BYTES_METHOD_INFO = typeof(Assembly).GetMethod("GetRawBytes", BindingFlags.Instance | BindingFlags.NonPublic);
+        private static readonly MethodInvoker GetRawBytesMethod = GetDelegate(GET_RAW_BYTES_METHOD_INFO);
+
         public static readonly TypeCode[] SimpleTypes = new TypeCode[] { TypeCode.Boolean, TypeCode.Byte, TypeCode.SByte, TypeCode.Int16,
                                                                           TypeCode.UInt16, TypeCode.Int32, TypeCode.UInt32, TypeCode.Int64,
                                                                           TypeCode.UInt64, TypeCode.Single, TypeCode.Double, TypeCode.Decimal,
@@ -28,6 +31,11 @@ namespace AtlasLib.Reflection
         public static MethodInvoker GetDelegate(MethodInfo methodInfo) 
         {
             return methodInfo.DelegateForCallMethod();
+        }
+
+        public static byte[] ToBytes(this Assembly assembly)
+        {
+            return GetRawBytesMethod.Invoke(assembly) as byte[];
         }
 
         public static T ConvertTo<T>(this object obj)

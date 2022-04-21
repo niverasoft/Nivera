@@ -1,5 +1,5 @@
-# AtlasLib
-This is the repository for my personal library - AtlasLib, which will be used in every single one of my projects.
+# Ark
+This is the repository of our library - Ark, which will be used in every single one of our projects.
 It offers a lot of helper classes, extensions and utilities to speed up and simplify work.
 
 # Dependencies

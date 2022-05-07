@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace ArkLib.ConfigLib.Ark.Internals
+namespace ArKLib.ConfigLib.Ark.Internals
 {
     public class PropertySerializer
     {

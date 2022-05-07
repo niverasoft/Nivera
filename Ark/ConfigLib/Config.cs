@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ArkLib.ConfigLib
+namespace ArKLib.ConfigLib
 {
     public static class Config
     {

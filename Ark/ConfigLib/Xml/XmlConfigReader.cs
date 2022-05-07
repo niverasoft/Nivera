@@ -2,9 +2,9 @@
 using System.IO;
 using System.Xml.Serialization;
 
-using ArkLib.Utils;
+using ArKLib.Utils;
 
-namespace ArkLib.ConfigLib.Xml
+namespace ArKLib.ConfigLib.Xml
 {
     public class XmlConfigReader : IConfigReader
     {

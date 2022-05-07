@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace ArkLib.ConfigLib.Ark
+namespace ArKLib.ConfigLib.Ark
 {
     public class ArkConfigEngine : IConfigEngine
     {

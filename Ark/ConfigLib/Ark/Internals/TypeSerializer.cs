@@ -3,9 +3,9 @@ using System.Reflection;
 using System.Linq;
 using System.Text;
 
-using ArkLib.Attributes;
+using ArKLib.Attributes;
 
-namespace ArkLib.ConfigLib.Ark.Internals
+namespace ArKLib.ConfigLib.Ark.Internals
 {
     public class TypeSerializer
     {

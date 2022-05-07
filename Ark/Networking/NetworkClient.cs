@@ -5,12 +5,12 @@ using System.Net.Sockets;
 using LiteNetLib;
 using LiteNetLib.Utils;
 
-using ArkLib.Utils;
-using ArkLib.Encryption;
+using ArKLib.Utils;
+using ArKLib.Encryption;
 
 using Newtonsoft.Json;
 
-namespace ArkLib.Networking
+namespace ArKLib.Networking
 {
     public class NetworkClient
     {

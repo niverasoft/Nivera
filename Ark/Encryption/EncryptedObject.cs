@@ -1,4 +1,4 @@
-﻿namespace ArkLib.Encryption
+﻿namespace ArKLib.Encryption
 {
     public class EncryptedObject
     {

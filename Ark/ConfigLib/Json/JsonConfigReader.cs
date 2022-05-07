@@ -1,11 +1,11 @@
-﻿using ArkLib.Utils;
+﻿using ArKLib.Utils;
 
 using Newtonsoft.Json;
 
 using System;
 using System.IO;
 
-namespace ArkLib.ConfigLib.Json
+namespace ArKLib.ConfigLib.Json
 {
     public class JsonConfigReader : IConfigReader
     {

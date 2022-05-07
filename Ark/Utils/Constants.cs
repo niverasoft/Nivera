@@ -1,8 +1,8 @@
 ﻿using System;
 
-using ArkLib.Encryption;
+using ArKLib.Encryption;
 
-namespace ArkLib.Utils
+namespace ArKLib.Utils
 {
     public static class Constants
     {
@@ -10,8 +10,8 @@ namespace ArkLib.Utils
         public static readonly Type ObjectType = typeof(object);
         public static readonly Type BoolType = typeof(bool);
 
-        public const string ArkGameObjectName = "Ark_ArkLib_UnityCompatModuleGameObject";
-        public const string ArkGameObjectTag = "Ark_ArkLib_ControlObject";
+        public const string ArkGameObjectName = "Ark_ArKLib_UnityCompatModuleGameObject";
+        public const string ArkGameObjectTag = "Ark_ArKLib_ControlObject";
 
         public static readonly EncryptionBitmap LibraryBitmap = EncryptionBitmap.SizeOf(4096);
     }

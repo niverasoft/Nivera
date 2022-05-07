@@ -3,13 +3,13 @@ using System.Linq;
 using System.Reflection;
 using System.Collections.Generic;
 
-using ArkLib.Reflection.Compiler;
-using ArkLib.Attributes;
-using ArkLib.Utils;
+using ArKLib.Reflection.Compiler;
+using ArKLib.Attributes;
+using ArKLib.Utils;
 
 using HarmonyLib;
 
-namespace ArkLib.Unity.Assets
+namespace ArKLib.Unity.Assets
 {
     public static class AssetModPatcher
     {

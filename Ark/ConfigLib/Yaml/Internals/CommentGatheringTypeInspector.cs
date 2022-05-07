@@ -5,7 +5,7 @@ using System.Linq;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.TypeInspectors;
 
-namespace ArkLib.ConfigLib.Yaml.Internals
+namespace ArKLib.ConfigLib.Yaml.Internals
 {
     public sealed class CommentGatheringTypeInspector : TypeInspectorSkeleton
     {

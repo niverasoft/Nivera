@@ -1,10 +1,10 @@
 ﻿using System;
 
-using ArkLib.Utils;
+using ArKLib.Utils;
 
 using Newtonsoft.Json;
 
-namespace ArkLib.ConfigLib.Json
+namespace ArKLib.ConfigLib.Json
 {
     public class JsonConfigWriter : IConfigWriter
     {

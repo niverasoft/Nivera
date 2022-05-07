@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Reflection;
 
-namespace ArkLib.Utils
+namespace ArKLib.Utils
 {
     public static class ThrowHelper
     {

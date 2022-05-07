@@ -1,4 +1,4 @@
-﻿namespace ArkLib.Reflection.Patching
+﻿namespace ArKLib.Reflection.Patching
 {
     public class CallbackBase { }
 }

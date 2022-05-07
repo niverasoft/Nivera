@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace ArkLib.Attributes
+namespace ArKLib.Attributes
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
     public class PatchMethodAttribute : Attribute

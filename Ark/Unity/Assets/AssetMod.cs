@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-using ArkLib.IO;
-using ArkLib.Utils;
+using ArKLib.IO;
+using ArKLib.Utils;
 
-namespace ArkLib.Unity.Assets
+namespace ArKLib.Unity.Assets
 {
     public class AssetMod
     {

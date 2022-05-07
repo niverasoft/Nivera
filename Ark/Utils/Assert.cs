@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Collections.Generic;
 
-using ArkLib.Reflection;
+using ArKLib.Reflection;
 
-namespace ArkLib.Utils
+namespace ArKLib.Utils
 {
     public static class Assert
     {

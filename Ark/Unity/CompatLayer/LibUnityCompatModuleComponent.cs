@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ArkLib.Unity.CompatLayer
+namespace ArKLib.Unity.CompatLayer
 {
     internal class LibUnityCompatModuleComponent : MonoBehaviour
     {

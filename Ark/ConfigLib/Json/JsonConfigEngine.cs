@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 
-using ArkLib.Utils;
+using ArKLib.Utils;
 
-namespace ArkLib.ConfigLib.Json
+namespace ArKLib.ConfigLib.Json
 {
     public class JsonConfigEngine : IConfigEngine
     {

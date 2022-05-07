@@ -1,11 +1,11 @@
 ﻿using System.IO;
 using System.Text;
 
-using ArkLib.Reflection;
+using ArKLib.Reflection;
 
 using Newtonsoft.Json;
 
-namespace ArkLib.IO
+namespace ArKLib.IO
 {
     public static class DataFile
     {

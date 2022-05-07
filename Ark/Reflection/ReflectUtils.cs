@@ -5,9 +5,9 @@ using System.Collections;
 
 using Fasterflect;
 
-using ArkLib.Utils;
+using ArKLib.Utils;
 
-namespace ArkLib.Reflection
+namespace ArKLib.Reflection
 {
     public static class ReflectUtils
     {

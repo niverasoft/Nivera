@@ -4,9 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-using ArkLib.Utils;
+using ArKLib.Utils;
 
-namespace ArkLib.Reflection.Patching.PropertyPatchers.Instance
+namespace ArKLib.Reflection.Patching.PropertyPatchers.Instance
 {
     internal class InstancePropertyPatcher<TValueType> : PropertyPatcherBase where TValueType : class
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
 
-using ArkLib.Reflection;
+using ArKLib.Reflection;
 
-namespace ArkLib.ConfigLib.Ark.Internals
+namespace ArKLib.ConfigLib.Ark.Internals
 {
     public class ListSerializer
     {

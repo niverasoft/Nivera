@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
 
-using ArkLib.Reflection;
-using ArkLib.Utils;
+using ArKLib.Reflection;
+using ArKLib.Utils;
 
-namespace ArkLib.ConfigLib.Ark.Internals
+namespace ArKLib.ConfigLib.Ark.Internals
 {
     public class DictionarySerializer
     {

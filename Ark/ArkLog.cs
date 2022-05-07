@@ -3,10 +3,10 @@ using System.Linq;
 using System;
 using System.Diagnostics;
 
-using ArkLib.Utils;
-using ArkLib.Logging;
+using ArKLib.Utils;
+using ArKLib.Logging;
 
-﻿namespace ArkLib
+﻿namespace ArKLib
 {
     public static class ArkLog
     {

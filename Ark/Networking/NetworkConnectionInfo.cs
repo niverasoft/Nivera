@@ -1,4 +1,4 @@
-﻿namespace ArkLib.Networking
+﻿namespace ArKLib.Networking
 {
     public class NetworkConnectionInfo
     {

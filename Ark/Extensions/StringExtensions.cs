@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArkLib.Extensions
+namespace ArKLib.Extensions
 {
     public class StringExtensions
     {

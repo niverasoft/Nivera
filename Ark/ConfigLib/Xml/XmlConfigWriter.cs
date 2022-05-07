@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 
-using ArkLib.Utils;
+using ArKLib.Utils;
 
 using System.Xml.Serialization;
 
-namespace ArkLib.ConfigLib.Xml
+namespace ArKLib.ConfigLib.Xml
 {
     public class XmlConfigWriter : IConfigWriter
     {

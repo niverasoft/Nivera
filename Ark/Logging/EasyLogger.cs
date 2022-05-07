@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ArkLib.Logging
+namespace ArKLib.Logging
 {
     public class EasyLogger : ILogger
     {

@@ -1,4 +1,4 @@
-﻿namespace ArkLib.Reflection.Compiler
+﻿namespace ArKLib.Reflection.Compiler
 {
     public enum CodeSourceType
     {

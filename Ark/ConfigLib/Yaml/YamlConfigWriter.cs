@@ -1,8 +1,8 @@
 ﻿using System;
 
-using ArkLib.Utils;
+using ArKLib.Utils;
 
-namespace ArkLib.ConfigLib.Yaml
+namespace ArKLib.ConfigLib.Yaml
 {
     public class YamlConfigWriter : IConfigWriter
     {

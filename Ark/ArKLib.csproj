@@ -424,12 +424,17 @@
     <Compile Include="Reflection\Patching\PropertyPatchers\Instance\InstancePropertyPatcher.cs" />
     <Compile Include="Reflection\Patching\PropertyPatchers\Static\StaticPropertyCallback.cs" />
     <Compile Include="Reflection\Patching\PropertyPatchers\Static\StaticPropertyPatcher.cs" />
+    <Compile Include="SonicGuesserAPI\SonicDifficulty.cs" />
+    <Compile Include="SonicGuesserAPI\SonicDatabase.cs" />
+    <Compile Include="SonicGuesserAPI\SonicSave.cs" />
+    <Compile Include="SonicGuesserAPI\SonicTrack.cs" />
     <Compile Include="Unity\Assets\AssetMod.cs" />
     <Compile Include="Unity\Assets\AssetModList.cs" />
     <Compile Include="Unity\Assets\AssetModPatcher.cs" />
     <Compile Include="Unity\Assets\AssetModInstaller.cs" />
     <Compile Include="Unity\CompatLayer\LibUnityCompatModule.cs" />
     <Compile Include="Unity\CompatLayer\LibUnityCompatModuleComponent.cs" />
+    <Compile Include="Unity\Logging\UnityLogger.cs" />
     <Compile Include="Utils\Assert.cs" />
     <Compile Include="ArkLog.cs" />
     <Compile Include="ConfigLib\Ark\ArkConfigEngine.cs" />

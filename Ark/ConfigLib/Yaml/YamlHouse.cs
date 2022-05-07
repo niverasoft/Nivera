@@ -2,9 +2,9 @@
 using YamlDotNet.Serialization.NamingConventions;
 using YamlDotNet.Serialization.NodeDeserializers;
 
-using ArkLib.ConfigLib.Yaml.Internals;
+using ArKLib.ConfigLib.Yaml.Internals;
 
-namespace ArkLib.ConfigLib.Yaml
+namespace ArKLib.ConfigLib.Yaml
 {
     internal static class YamlHouse
     {

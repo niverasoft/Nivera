@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using RandomDataGenerator.FieldOptions;
 using RandomDataGenerator.Randomizers;
 
-namespace ArkLib.Utils
+namespace ArKLib.Utils
 {
     internal class IntNumberOptions : FieldOptionsNumber<int> { }
     internal class ByteNumberOptions : FieldOptionsNumber<byte> { }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ArkLib.Attributes
+namespace ArKLib.Attributes
 {
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = false)]
     public class DescriptionAttribute : Attribute

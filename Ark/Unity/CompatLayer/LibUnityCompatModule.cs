@@ -5,9 +5,9 @@ using System.Linq;
 
 using UnityEngine;
 
-using ArkLib.Utils;
+using ArKLib.Utils;
 
-namespace ArkLib.Unity.CompatLayer
+namespace ArKLib.Unity.CompatLayer
 {
     internal static class LibUnityCompatModule
     {
@@ -15,8 +15,11 @@ namespace ArkLib.Unity.CompatLayer
         internal static LibUnityCompatModuleComponent libUnityCompatModuleComponent;
 
         internal static List<Assembly> loadedAssemblies = new List<Assembly>();
+        internal static List<Action> updateMethods = new List<Action>();
 
         internal static Assembly AssemblyCSharpAssembly;
+
+        public static bool IsActive => gameObject != null && libUnityCompatModuleComponent != null;
 
         internal static void EnableUnityCompatibility()
         {
@@ -27,6 +30,11 @@ namespace ArkLib.Unity.CompatLayer
             gameObject.SetActive(true);
 
             UnityEngine.Object.DontDestroyOnLoad(gameObject);
+        }
+
+        internal static void RegisterUpdateMethod(Action action)
+        {
+            updateMethods.Add(action);
         }
 
         internal static void OnStart()
@@ -67,7 +75,10 @@ namespace ArkLib.Unity.CompatLayer
 
         internal static void OnUpdate()
         {
-
+            foreach (var method in updateMethods)
+            {
+                method();
+            }
         }
 
         internal static void OnFixedUpdate()

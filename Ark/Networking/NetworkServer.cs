@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using LiteNetLib;
 using LiteNetLib.Utils;
 
-using ArkLib.Encryption;
+using ArKLib.Encryption;
 
 using Newtonsoft.Json;
 
-namespace ArkLib.Networking
+namespace ArKLib.Networking
 {
     public class NetworkServer
     { 

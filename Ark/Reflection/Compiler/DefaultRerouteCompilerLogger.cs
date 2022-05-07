@@ -1,6 +1,6 @@
-﻿using ArkLib.Utils;
+﻿using ArKLib.Utils;
 
-namespace ArkLib.Reflection.Compiler
+namespace ArKLib.Reflection.Compiler
 {
     internal class DefaultRerouteCompilerLogger : ICompilerLogger
     {

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 using SharpCompress.Archives;
 
-namespace ArkLib.Reflection.Compiler
+namespace ArKLib.Reflection.Compiler
 {
     public class CodeCompiler
     {
@@ -318,7 +318,7 @@ namespace ArkLib.Reflection.Compiler
             if (codeLanguageType == CodeLanguageType.CSharp)
                 return "csharp";
 
-            throw new NotSupportedException($"{codeLanguageType} is not a supported language by ArkLib.");
+            throw new NotSupportedException($"{codeLanguageType} is not a supported language by ArKLib.");
         }
     }
 }

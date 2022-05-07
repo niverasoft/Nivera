@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ArkLib.Logging
+namespace ArKLib.Logging
 {
     public struct LogLine
     {

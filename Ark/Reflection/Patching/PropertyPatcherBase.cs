@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace ArkLib.Reflection.Patching
+namespace ArKLib.Reflection.Patching
 {
     public abstract class PropertyPatcherBase
     {

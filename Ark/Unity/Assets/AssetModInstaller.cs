@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace ArkLib.Unity.Assets
+namespace ArKLib.Unity.Assets
 {
     public static class AssetModInstaller
     {

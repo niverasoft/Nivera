@@ -1,8 +1,8 @@
 ﻿using System;
 
-using ArkLib.ConfigLib.Ark.Internals;
+using ArKLib.ConfigLib.Ark.Internals;
 
-namespace ArkLib.ConfigLib.Ark
+namespace ArKLib.ConfigLib.Ark
 {
     public class ArkConfigWriter : IConfigWriter
     {

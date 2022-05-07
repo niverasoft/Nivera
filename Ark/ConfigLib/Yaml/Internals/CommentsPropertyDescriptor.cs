@@ -3,7 +3,7 @@
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 
-namespace ArkLib.ConfigLib.Yaml.Internals
+namespace ArKLib.ConfigLib.Yaml.Internals
 {
     public sealed class CommentsPropertyDescriptor : IPropertyDescriptor
     {
@@ -43,7 +43,7 @@ namespace ArkLib.ConfigLib.Yaml.Internals
 
         public IObjectDescriptor Read(object target)
         {
-            ArkLib.Attributes.DescriptionAttribute description = baseDescriptor.GetCustomAttribute<ArkLib.Attributes.DescriptionAttribute>();
+            ArKLib.Attributes.DescriptionAttribute description = baseDescriptor.GetCustomAttribute<ArKLib.Attributes.DescriptionAttribute>();
             return description != null
                 ? new CommentsObjectDescriptor(baseDescriptor.Read(target), description.GetDescription())
                 : baseDescriptor.Read(target);

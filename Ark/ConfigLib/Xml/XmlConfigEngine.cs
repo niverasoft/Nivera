@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 
-using ArkLib.Utils;
+using ArKLib.Utils;
 
-namespace ArkLib.ConfigLib.Xml
+namespace ArKLib.ConfigLib.Xml
 {
     public class XmlConfigEngine : IConfigEngine
     {

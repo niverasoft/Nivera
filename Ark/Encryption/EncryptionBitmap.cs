@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Collections.Generic;
 
-using ArkLib.Utils;
+using ArKLib.Utils;
 
-namespace ArkLib.Encryption
+namespace ArKLib.Encryption
 {
     public class EncryptionBitmap
     {

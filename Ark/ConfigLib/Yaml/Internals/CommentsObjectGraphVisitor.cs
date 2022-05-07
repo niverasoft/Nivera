@@ -3,7 +3,7 @@ using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.ObjectGraphVisitors;
 
-namespace ArkLib.ConfigLib.Yaml.Internals
+namespace ArKLib.ConfigLib.Yaml.Internals
 {
     public sealed class CommentsObjectGraphVisitor : ChainedObjectGraphVisitor
     {

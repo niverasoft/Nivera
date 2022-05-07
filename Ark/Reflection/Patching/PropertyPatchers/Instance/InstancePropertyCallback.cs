@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ArkLib.Reflection.Patching.PropertyPatchers.Instance
+namespace ArKLib.Reflection.Patching.PropertyPatchers.Instance
 {
     public class InstancePropertyCallback<TValue> : CallbackBase where TValue : class
     {

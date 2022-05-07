@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Collections.Generic;
 
-using ArkLib.Utils;
+using ArKLib.Utils;
 
-namespace ArkLib.ConfigLib.Ark.Internals
+namespace ArKLib.ConfigLib.Ark.Internals
 {
     public class ConfigWriter
     {

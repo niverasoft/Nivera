@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ArkLib.Attributes
+namespace ArKLib.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     public class PatchTypeAttribute : Attribute

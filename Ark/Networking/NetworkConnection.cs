@@ -1,9 +1,9 @@
 ﻿using System;
 using LiteNetLib;
 using Utf8Json;
-using ArkLib.Utils;
+using ArKLib.Utils;
 
-namespace ArkLib.Networking
+namespace ArKLib.Networking
 {
     public class NetworkConnection
     {

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 
-namespace ArkLib.ConfigLib.Yaml.Internals
+namespace ArKLib.ConfigLib.Yaml.Internals
 {
     public sealed class ValidatingNodeDeserializer : INodeDeserializer
     {

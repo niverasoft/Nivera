@@ -2,11 +2,11 @@
 using System.Reflection;
 using System.Reflection.Emit;
 
-using ArkLib.Utils;
+using ArKLib.Utils;
 
 using HarmonyLib;
 
-namespace ArkLib.Reflection.Patching.PropertyPatchers.Static
+namespace ArKLib.Reflection.Patching.PropertyPatchers.Static
 {
     internal class StaticPropertyPatcher<TValueType> : PropertyPatcherBase where TValueType : class
     {

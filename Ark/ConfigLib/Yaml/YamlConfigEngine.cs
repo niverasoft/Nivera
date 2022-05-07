@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 
-using ArkLib.Utils;
+using ArKLib.Utils;
 
-namespace ArkLib.ConfigLib.Yaml
+namespace ArKLib.ConfigLib.Yaml
 {
     public class YamlConfigEngine : IConfigEngine
     {

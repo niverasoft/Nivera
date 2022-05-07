@@ -1,10 +1,10 @@
-﻿using ArkLib.Unity.CompatLayer;
-using ArkLib.Reflection;
-using ArkLib.Logging;
+﻿using ArKLib.Unity.CompatLayer;
+using ArKLib.Reflection;
+using ArKLib.Logging;
 
 using System;
 
-namespace ArkLib
+namespace ArKLib
 {
     public static class LibProperties
     {

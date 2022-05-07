@@ -3,7 +3,7 @@
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 
-namespace ArkLib.ConfigLib.Yaml.Internals
+namespace ArKLib.ConfigLib.Yaml.Internals
 {
     public sealed class CommentsObjectDescriptor : IObjectDescriptor
     {

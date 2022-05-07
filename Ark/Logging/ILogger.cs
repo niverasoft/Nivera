@@ -1,4 +1,4 @@
-﻿namespace ArkLib.Logging
+﻿namespace ArKLib.Logging
 {
     public interface ILogger
     {

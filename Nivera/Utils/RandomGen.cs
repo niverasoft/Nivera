@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using RandomDataGenerator.FieldOptions;
@@ -266,6 +267,76 @@ namespace Nivera.Utils
             });
 
             return _randomInt.Generate().GetValueOrDefault();
+        }
+
+        public static byte[] RandomKey(int size)
+        {
+            List<byte> bytes = new List<byte>();
+            List<int> processed = new List<int>();
+            List<int> required = new List<int>();
+
+            Random rnd = new Random();
+
+            bool IsFinished(List<int> pr, List<int> rq)
+            {
+                for (int i = 0; i < rq.Count; i++)
+                {
+                    if (!pr.Contains(i))
+                        return false;
+                }
+
+                return true;
+            }
+
+            void SetRequired(List<int> rq)
+            {
+                for (int i = 0; i < size; i++)
+                {
+                    rq.Add(i);
+                }
+            }
+
+            void FixList(List<int> pr)
+            {
+                for (int i = 0; i < pr.Count; i++)
+                {
+                    if (pr.Count(x => x == i) > 1)
+                    {
+                        pr.RemoveAll(x => x == i);
+                        pr.Add(i);
+
+                        continue;
+                    }
+                }
+            }
+
+            byte[] Convert(List<int> pr)
+            {
+                List<byte> bts = new List<byte>();
+
+                foreach (int i in pr)
+                {
+                    bts.Add(System.Convert.ToByte(i));
+                }
+
+                return bts.ToArray();
+            }
+
+            SetRequired(required);
+
+            while (!IsFinished(processed, required))
+            {
+                int randomInt = rnd.Next(0, size);
+
+                if (processed.Contains(randomInt))
+                    continue;
+
+                processed.Add(randomInt);
+
+                FixList(processed);
+            }
+
+            return Convert(processed);
         }
     }
 }

@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Text;
 using System.Net.Sockets;
 using System.Collections.Generic;
 
 using LiteNetLib;
-
-using Newtonsoft.Json;
 
 namespace Nivera.Networking
 {
@@ -15,20 +12,22 @@ namespace Nivera.Networking
 
         public event Action<ConnectionRequest> OnConnectionRequest;
         public event Action<SocketError> OnConnectionError;
-        public event Action<NetPeer> OnConnectionEstablished;
+        public event Action<NetPeer, NetworkConnection> OnConnectionEstablished;
         public event Action<NetPeer, DisconnectInfo> OnConnectionTerminated;
-        public event Action<NetPeer, NetworkPacket> OnDataReceived;
-        public event Action<NetPeer, NetworkPacket> OnDataSent;
 
-        private static List<NetworkClient> connectedClients { get; } = new List<NetworkClient>();
+        private static List<NetworkConnection> connectedClients { get; } = new List<NetworkConnection>();
 
         public EventBasedNetListener eventBasedNetListener { get; }
         public NetManager netManager { get; }
 
+        public string sessionKey { get; set; }
+
         public bool isRunning { get => netManager != null && netManager.IsRunning; }
 
-        public NetworkServer()
+        public NetworkServer(string sessionKey = null)
         {
+            sessionKey = sessionKey == null ? Encryption.EncryptionKey.GenerateKey(NetworkConnection.SessionKeyMaxLen) : sessionKey;
+
             eventBasedNetListener = new EventBasedNetListener();
             netManager = new NetManager(eventBasedNetListener);
             netManager.AutoRecycle = true;
@@ -51,31 +50,20 @@ namespace Nivera.Networking
 
             eventBasedNetListener.PeerConnectedEvent += (x) =>
             {
-                OnConnectionEstablished(x);
+                var connection = new NetworkConnection(netManager, eventBasedNetListener, true, sessionKey, x);
+
+                OnConnectionEstablished(x, connection);
+
+                connectedClients.Add(connection);
             };
 
             eventBasedNetListener.PeerDisconnectedEvent += (x, e) =>
             {
                 OnConnectionTerminated(x, e);
+
+                connectedClients.Find(z => z.netPeer.Id == x.Id).Disconnect();
+                connectedClients.RemoveAt(connectedClients.FindIndex(z => z.netPeer.Id == x.Id));
             };
-
-            eventBasedNetListener.NetworkReceiveEvent += (x, e, z, u) =>
-            {
-                byte[] buffer = new byte[e.GetInt()];
-
-                e.GetBytes(buffer, buffer.Length);
-
-                NetworkPacket networkTransport = JsonConvert.DeserializeObject<NetworkPacket>(Encoding.UTF8.GetString(buffer));
-
-                OnDataReceived(x, networkTransport);
-            };
-        }
-
-        public void Send(NetPeer netPeer, NetworkPacket networkTransport)
-        {
-            netPeer.Send(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(networkTransport)), DeliveryMethod.ReliableOrdered);
-
-            OnDataSent(netPeer, networkTransport);
         }
 
         public void Start()
@@ -85,7 +73,7 @@ namespace Nivera.Networking
 
         public void Stop()
         {
-            connectedClients.ForEach(x => x.Stop());
+            connectedClients.ForEach(x => x.Disconnect());
 
             netManager.Stop();
         }

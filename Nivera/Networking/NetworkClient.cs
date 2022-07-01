@@ -27,7 +27,7 @@ namespace Nivera.Networking
 
             netManager.Start();
 
-            connection = new NetworkConnection(netManager, eventBasedNetListener);
+            connection = new NetworkConnection(netManager, eventBasedNetListener, false);
         }
 
         public void Stop()

@@ -332,6 +332,8 @@
     <Compile Include="ConfigLib\Yaml\YamlConfigReader.cs" />
     <Compile Include="ConfigLib\Yaml\YamlConfigWriter.cs" />
     <Compile Include="ConfigLib\Yaml\YamlHouse.cs" />
+    <Compile Include="Encryption\Encryption.cs" />
+    <Compile Include="Encryption\EncryptionKey.cs" />
     <Compile Include="IO\BinaryFile.cs" />
     <Compile Include="LibProperties.cs" />
     <Compile Include="Logging\EasyLogger.cs" />
@@ -383,6 +385,7 @@
     <Compile Include="Utils\RandomGen.cs" />
     <Compile Include="Utils\Registry.cs" />
     <Compile Include="Utils\ThrowHelper.cs" />
+    <Compile Include="Utils\Timers.cs" />
     <Compile Include="Utils\Utility.cs" />
   </ItemGroup>
   <ItemGroup>
